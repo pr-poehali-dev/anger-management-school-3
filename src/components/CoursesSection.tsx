@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
+import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function CoursesSection() {
   const courses = [
@@ -54,21 +56,34 @@ export default function CoursesSection() {
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Выберите свой путь к спокойствию
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Три уровня обучения для тех, кто готов изменить свою жизнь
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {courses.map((course, index) => (
-            <Card
+            <motion.div
               key={index}
-              className={`relative ${course.isPopular ? "border-primary border-2 shadow-lg" : ""}`}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
             >
+              <Card
+                className={`relative h-full ${course.isPopular ? "border-primary border-2 shadow-lg" : ""}`}
+              >
               {course.isPopular && (
                 <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-primary-foreground">
                   ПОПУЛЯРНЫЙ
@@ -111,14 +126,20 @@ export default function CoursesSection() {
                   ))}
                 </ul>
 
-                <Button
-                  className={`w-full ${course.isPopular ? "bg-primary hover:bg-primary/90" : ""}`}
-                  variant={course.isPopular ? "default" : "outline"}
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  Выбрать курс
-                </Button>
+                  <Button
+                    className={`w-full ${course.isPopular ? "bg-primary hover:bg-primary/90" : ""}`}
+                    variant={course.isPopular ? "default" : "outline"}
+                  >
+                    Выбрать курс
+                  </Button>
+                </motion.div>
               </CardContent>
-            </Card>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>
